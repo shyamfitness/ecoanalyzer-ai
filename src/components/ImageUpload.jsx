@@ -126,3 +126,6 @@ const ImageUpload = ({ onAnalysis, isAnalyzing }) => {
       )}
     </div>
   )
+}
+
+export default ImageUpload
