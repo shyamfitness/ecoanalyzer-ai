@@ -1,8 +1,11 @@
 import { useState, useCallback } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { Upload, X, Eye, Loader2 } from 'lucide-react'
+import Card from './ui/Card'
+import Button from './ui/Button'
+import { cn } from './utils/cn'
 
-const ImageUpload = ({ onAnalysis, isAnalyzing }) => {
+const ImageUpload = ({ onAnalysis, isAnalyzing, isAuthenticated, onLoginRequired }) => {
   const [uploadedImage, setUploadedImage] = useState(null)
   const [preview, setPreview] = useState(null)
 
@@ -11,7 +14,6 @@ const ImageUpload = ({ onAnalysis, isAnalyzing }) => {
     if (file && file.type.startsWith('image/')) {
       setUploadedImage(file)
       
-      // Create preview
       const reader = new FileReader()
       reader.onload = (e) => setPreview(e.target.result)
       reader.readAsDataURL(file)
@@ -34,73 +36,102 @@ const ImageUpload = ({ onAnalysis, isAnalyzing }) => {
   const handleAnalyze = async () => {
     if (!uploadedImage) return
 
-    // Simulate OCR extraction (in real app, you'd use Tesseract.js or similar)
-    const mockExtractedData = {
-      name: 'Product extracted from image',
-      description: 'Product details extracted using OCR technology',
-      origin: 'Unknown',
-      confidence: 0.85
+    if (!isAuthenticated) {
+      onLoginRequired()
+      return
     }
 
-    await onAnalysis(mockExtractedData)
+    try {
+      const { createWorker } = await import('tesseract.js')
+      const worker = await createWorker()
+      await worker.loadLanguage('eng')
+      await worker.initialize('eng')
+      const { data } = await worker.recognize(uploadedImage)
+      await worker.terminate()
+
+      const extractedText = data?.text || ''
+      const firstLine = extractedText.split('\n').map(t => t.trim()).find(Boolean) || 'Product from image'
+
+      const ocrData = {
+        name: firstLine.slice(0, 60),
+        description: extractedText.slice(0, 500),
+        origin: 'Unknown',
+        confidence: data?.confidence ? data.confidence / 100 : 0.8
+      }
+
+      await onAnalysis(uploadedImage, ocrData)
+    } catch (err) {
+      console.warn('OCR failed or Tesseract not available, using fallback', err)
+      const fallbackData = {
+        name: 'Product extracted from image',
+        description: 'OCR unavailable; using fallback metadata for analysis',
+        origin: 'Unknown',
+        confidence: 0.5
+      }
+      await onAnalysis(uploadedImage, fallbackData)
+    }
   }
 
   return (
-    <div className="space-y-6">
+    <Card>
       {!uploadedImage ? (
         <div
           {...getRootProps()}
-          className={`border-2 border-dashed rounded-xl p-12 text-center cursor-pointer transition-colors ${
+          className={cn(
+            'border-2 border-dashed rounded-2xl p-16 text-center cursor-pointer',
+            'transition-all duration-300',
             isDragActive
-              ? 'border-eco-500 bg-eco-50'
-              : 'border-gray-300 hover:border-eco-400 hover:bg-gray-50'
-          }`}
+              ? 'border-zinc-900 bg-zinc-50 scale-[1.02]'
+              : 'border-zinc-300 hover:border-zinc-600 hover:bg-zinc-50'
+          )}
         >
           <input {...getInputProps()} />
-          <Upload className="mx-auto mb-4 text-gray-400" size={48} />
-          <h3 className="text-xl font-semibold text-gray-700 mb-2">
+          <div className="w-20 h-20 bg-zinc-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
+            <Upload size={40} className="text-zinc-600" />
+          </div>
+          <h3 className="text-xl font-semibold text-zinc-900 mb-2">
             {isDragActive ? 'Drop image here' : 'Upload Product Image'}
           </h3>
-          <p className="text-gray-500 mb-4">
+          <p className="text-zinc-600 mb-2">
             Drag and drop an image, or click to select
           </p>
-          <p className="text-sm text-gray-400">
-            Supports JPEG, PNG, WebP (Max 5MB)
+          <p className="text-sm text-zinc-500">
+            Supports JPEG, PNG, WebP (Max 10MB)
           </p>
         </div>
       ) : (
-        <div className="space-y-4">
-          <div className="relative bg-gray-50 rounded-xl p-6">
+        <div className="space-y-6">
+          <div className="relative bg-zinc-50 rounded-2xl p-6 border border-zinc-200">
             <button
               onClick={removeImage}
-              className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600"
+              className="absolute top-4 right-4 w-8 h-8 bg-zinc-900 text-white rounded-full flex items-center justify-center hover:bg-zinc-800 transition-colors shadow-sm"
             >
               <X size={16} />
             </button>
             
-            <div className="flex items-start gap-4">
+            <div className="flex items-start gap-6">
               <div className="flex-shrink-0">
                 <img
                   src={preview}
                   alt="Uploaded product"
-                  className="w-32 h-32 object-cover rounded-lg border"
+                  className="w-40 h-40 object-cover rounded-xl border-2 border-zinc-200 shadow-sm"
                 />
               </div>
               
-              <div className="flex-1">
-                <div className="flex items-center gap-2 mb-2">
-                  <Eye size={16} className="text-gray-500" />
-                  <span className="font-medium text-gray-700">Image Preview</span>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 mb-3">
+                  <Eye size={18} className="text-zinc-600" />
+                  <span className="font-medium text-zinc-900">Image Preview</span>
                 </div>
-                <p className="text-sm text-gray-600 mb-2">
+                <p className="text-sm text-zinc-600 mb-2">
                   <strong>File:</strong> {uploadedImage.name}
                 </p>
-                <p className="text-sm text-gray-600 mb-4">
+                <p className="text-sm text-zinc-600 mb-4">
                   <strong>Size:</strong> {(uploadedImage.size / 1024 / 1024).toFixed(2)} MB
                 </p>
                 
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
-                  <p className="text-sm text-blue-800">
+                <div className="bg-white border border-zinc-200 rounded-xl p-4">
+                  <p className="text-sm text-zinc-700">
                     📝 <strong>OCR Analysis:</strong> We'll extract text from your image to identify the product and analyze its environmental impact.
                   </p>
                 </div>
@@ -108,23 +139,25 @@ const ImageUpload = ({ onAnalysis, isAnalyzing }) => {
             </div>
           </div>
           
-          <button
+          <Button
+            variant="primary"
+            size="lg"
             onClick={handleAnalyze}
             disabled={isAnalyzing}
-            className="w-full bg-eco-600 text-white py-3 px-6 rounded-lg font-medium hover:bg-eco-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            className="w-full"
           >
             {isAnalyzing ? (
               <>
-                <Loader2 className="animate-spin" size={20} />
+                <Loader2 className="animate-spin mr-2" size={20} />
                 Extracting & Analyzing...
               </>
             ) : (
               'Analyze Image'
             )}
-          </button>
+          </Button>
         </div>
       )}
-    </div>
+    </Card>
   )
 }
 

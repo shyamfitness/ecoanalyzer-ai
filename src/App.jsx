@@ -1,57 +1,131 @@
-import { useState } from 'react'
-import Header from './components/Header'
-import ProductAnalyzer from './components/ProductAnalyzer'
-import ResultDisplay from './components/ResultDisplay'
-import HistoryView from './components/HistoryView'
-import { Leaf } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { AuthProvider, useAuth } from './contexts/AuthContext'
+import Navbar from './components/Navbar'
+import Footer from './components/Footer'
+import LoginModal from './components/LoginModal'
 
-function App() {
-  const [currentView, setCurrentView] = useState('analyzer')
+// Pages
+import Home from './pages/Home'
+import Analyzer from './pages/Analyzer'
+import Dashboard from './pages/Dashboard'
+import History from './pages/History'
+import About from './pages/About'
+import Settings from './pages/Settings'
+import Result from './pages/Result'
+
+function AppContent() {
+  const { user, isAuthenticated } = useAuth()
+  const [currentView, setCurrentView] = useState('home')
   const [analysisResult, setAnalysisResult] = useState(null)
   const [analysisHistory, setAnalysisHistory] = useState([])
+  const [showLoginModal, setShowLoginModal] = useState(false)
+
+  // Load persisted history on first render
+  useEffect(() => {
+    try {
+      const savedHistory = localStorage.getItem('ecoanalyzer_history')
+      if (savedHistory) {
+        setAnalysisHistory(JSON.parse(savedHistory))
+      }
+    } catch (e) {
+      console.error('Failed to load history from localStorage', e)
+    }
+  }, [])
+
+  // Persist history whenever it changes
+  useEffect(() => {
+    try {
+      localStorage.setItem('ecoanalyzer_history', JSON.stringify(analysisHistory))
+    } catch (e) {
+      console.error('Failed to save history to localStorage', e)
+    }
+  }, [analysisHistory])
 
   const handleAnalysisComplete = (result) => {
-    setAnalysisResult(result)
-    setAnalysisHistory(prev => [result, ...prev])
+    const normalized = {
+      ...result,
+      timestamp: result.timestamp || result.createdAt || new Date().toISOString(),
+    }
+    setAnalysisResult(normalized)
+    setAnalysisHistory(prev => [normalized, ...prev])
     setCurrentView('result')
   }
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-eco-50 to-eco-100">
-      <Header currentView={currentView} setCurrentView={setCurrentView} />
-      
-      <main className="container mx-auto px-4 py-8">
-        <div className="text-center mb-8">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <Leaf className="text-eco-600" size={48} />
-            <h1 className="text-4xl font-bold text-gray-800">
-              AI Environmental Impact Analyzer
-            </h1>
-          </div>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Analyze products to compute Environmental Impact Scores and make sustainable purchasing decisions
-          </p>
-        </div>
+  const handleDeleteFromHistory = (id) => {
+    setAnalysisHistory(prev => prev.filter(item => (item.id || item._id) !== id))
+  }
 
+  const handleViewResult = (result) => {
+    setAnalysisResult(result)
+    setCurrentView('result')
+  }
+
+  // Handle login view
+  useEffect(() => {
+    if (currentView === 'login') {
+      setShowLoginModal(true)
+    }
+  }, [currentView])
+
+  return (
+    <div className="min-h-screen flex flex-col bg-stone-50">
+      <Navbar currentView={currentView} setCurrentView={setCurrentView} />
+      
+      <main className="flex-1">
+        {currentView === 'home' && <Home setCurrentView={setCurrentView} />}
         {currentView === 'analyzer' && (
-          <ProductAnalyzer onAnalysisComplete={handleAnalysisComplete} />
-        )}
-        
-        {currentView === 'result' && analysisResult && (
-          <ResultDisplay result={analysisResult} onBackToAnalyzer={() => setCurrentView('analyzer')} />
-        )}
-        
-        {currentView === 'history' && (
-          <HistoryView 
-            history={analysisHistory} 
-            onViewResult={(result) => {
-              setAnalysisResult(result)
-              setCurrentView('result')
-            }}
+          <Analyzer
+            onAnalysisComplete={handleAnalysisComplete}
+            isAuthenticated={isAuthenticated}
+            onLoginRequired={() => setShowLoginModal(true)}
           />
         )}
+        {currentView === 'result' && analysisResult && (
+          <Result
+            result={analysisResult}
+            onBackToAnalyzer={() => setCurrentView('analyzer')}
+          />
+        )}
+        {currentView === 'dashboard' && (
+          <Dashboard setCurrentView={setCurrentView} />
+        )}
+        {currentView === 'history' && (
+          <History
+            history={analysisHistory}
+            onViewResult={handleViewResult}
+            onDeleteItem={handleDeleteFromHistory}
+            isAuthenticated={isAuthenticated}
+            onLoginRequired={() => {
+              setShowLoginModal(true)
+              setCurrentView('login')
+            }}
+            setCurrentView={setCurrentView}
+          />
+        )}
+        {currentView === 'about' && <About />}
+        {currentView === 'settings' && <Settings />}
       </main>
+
+      <Footer />
+
+      <LoginModal 
+        isOpen={showLoginModal}
+        onClose={() => {
+          setShowLoginModal(false)
+          if (currentView === 'login') {
+            setCurrentView('home')
+          }
+        }}
+      />
     </div>
+  )
+}
+
+function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   )
 }
 
