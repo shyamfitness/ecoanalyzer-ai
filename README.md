@@ -12,9 +12,9 @@ Built with **React.js, Node.js, Express, MongoDB, and OpenAI**, the platform pro
 
 ## 🚀 Live Demo
 
-**[View Live Application](https://your-demo-link.vercel.app)** *(Update after deployment)*
+**[View Live Application](https://ecoanalyzer-ai.vercel.app/)** 
 
-> **Note:** After deployment, update this link with your live URL.
+
 
 ---
 
@@ -313,7 +313,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Contact
 
-**Your Name** - shyamjeesrivastav035@gmail.com
+**email** - shyamjeesrivastav035@gmail.com
 
 **Project Link**: [https://github.com/shyamfitness/ecoanalyzer-ai](https://github.com/shyamfitness/ecoanalyzer-ai)
 
