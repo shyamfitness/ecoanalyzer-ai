@@ -154,9 +154,9 @@ After deployment, update these:
 ### Backend (Render) ✅
 - [ ] `NODE_ENV=production`
 - [ ] `PORT=10000`
-- [ ] `MONGODB_URI=mongodb+srv://...`
+- [ ] `MONGODB_URI=mongodb+srv://<username>:<password>@<cluster>.mongodb.net/ecoanalyzer`
 - [ ] `MONGODB_DB_NAME=ecoanalyzer`
-- [ ] `OPENAI_API_KEY=sk-...`
+- [ ] `OPENAI_API_KEY=<your-openai-api-key>`
 - [ ] `JWT_SECRET=secure-random-string`
 - [ ] `FRONTEND_URL=https://your-frontend.vercel.app`
 - [ ] `OPENAI_MODEL=gpt-4o-mini`
