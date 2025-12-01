@@ -107,7 +107,7 @@ This guide will help you deploy EcoAnalyzer AI to production.
 ### 3.2 Connection String Format
 
 ```
-mongodb+srv://username:password@cluster.mongodb.net/ecoanalyzer?retryWrites=true&w=majority
+mongodb+srv://<username>:<password>@<cluster>.mongodb.net/ecoanalyzer?retryWrites=true&w=majority
 ```
 
 ---

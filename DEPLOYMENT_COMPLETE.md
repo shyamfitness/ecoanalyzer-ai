@@ -28,7 +28,7 @@ The backend is running but needs a valid MongoDB connection string.
    - Go to [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
    - Create account/cluster (Free tier available)
    - Get connection string from "Connect" → "Connect your application"
-   - Format: `mongodb+srv://username:password@cluster.mongodb.net/ecoanalyzer?retryWrites=true&w=majority`
+   - Format: `mongodb+srv://<username>:<password>@<cluster>.mongodb.net/ecoanalyzer?retryWrites=true&w=majority`
 
 2. **Update in Render:**
    - Go to: https://dashboard.render.com

@@ -14,9 +14,10 @@ import { notFoundHandler, errorHandler } from './middleware/errorHandler.js';
 dotenv.config();
 
 // Set default JWT_SECRET for development if not provided
+// NOTE: This is a development-only fallback. NEVER use in production!
 if (!process.env.JWT_SECRET && process.env.NODE_ENV !== 'production') {
-  process.env.JWT_SECRET = 'ecoanalyzer_dev_secret_key_change_in_production';
-  console.warn('⚠️  WARNING: Using default JWT_SECRET for development. Set JWT_SECRET in .env for production!');
+  process.env.JWT_SECRET = 'dev-secret-change-in-production-' + Date.now();
+  console.warn('⚠️  WARNING: Using temporary JWT_SECRET for development. Set JWT_SECRET in .env for production!');
 }
 
 const __filename = fileURLToPath(import.meta.url);

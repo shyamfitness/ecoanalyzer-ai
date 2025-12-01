@@ -21,7 +21,7 @@
    - Click **"Connect"** on your cluster
    - Choose **"Connect your application"**
    - Copy the connection string
-   - Format: `mongodb+srv://username:password@cluster.mongodb.net/ecoanalyzer?retryWrites=true&w=majority`
+   - Format: `mongodb+srv://<username>:<password>@<cluster>.mongodb.net/ecoanalyzer?retryWrites=true&w=majority`
 
 4. **Replace placeholders:**
    - Replace `<username>` with your database username
@@ -52,7 +52,7 @@
 4. **Find `MONGODB_URI`**
 5. **Update the value** with your MongoDB Atlas connection string:
    ```
-   mongodb+srv://your-username:your-password@cluster.mongodb.net/ecoanalyzer?retryWrites=true&w=majority
+   mongodb+srv://<your-username>:<your-password>@<cluster>.mongodb.net/ecoanalyzer?retryWrites=true&w=majority
    ```
 6. **Save Changes** - Render will automatically redeploy
 
@@ -61,7 +61,7 @@
 ## ✅ Example Connection String
 
 ```
-mongodb+srv://ecoanalyzer:MySecurePassword123@cluster0.abc123.mongodb.net/ecoanalyzer?retryWrites=true&w=majority
+mongodb+srv://<username>:<password>@<cluster-id>.mongodb.net/ecoanalyzer?retryWrites=true&w=majority
 ```
 
 **Important:**

@@ -82,7 +82,7 @@ Create a `.env` file in the backend directory:
 ```env
 # Database
 MONGODB_URI=mongodb://localhost:27017/ecoanalyzer
-# or for MongoDB Atlas: mongodb+srv://username:password@cluster.mongodb.net/ecoanalyzer
+# or for MongoDB Atlas: mongodb+srv://<username>:<password>@<cluster>.mongodb.net/ecoanalyzer
 
 # OpenAI API
 OPENAI_API_KEY=your_openai_api_key_here

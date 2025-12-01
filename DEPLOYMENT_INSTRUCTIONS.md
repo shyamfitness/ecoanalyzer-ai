@@ -92,7 +92,7 @@
 6. **Get connection string:**
    - Click "Connect" → "Connect your application"
    - Copy connection string
-   - Format: `mongodb+srv://username:password@cluster.mongodb.net/ecoanalyzer?retryWrites=true&w=majority`
+   - Format: `mongodb+srv://<username>:<password>@<cluster>.mongodb.net/ecoanalyzer?retryWrites=true&w=majority`
 7. **Update in Render:**
    - Replace `MONGODB_URI` in backend environment variables
 
