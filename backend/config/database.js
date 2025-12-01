@@ -26,7 +26,13 @@ export const connectDatabase = async () => {
   } catch (error) {
     console.error('❌ MongoDB connection failed');
     console.error(error);
-    process.exit(1);
+    // In production, don't exit immediately - allow server to start
+    // The app can still serve requests, but database operations will fail
+    if (process.env.NODE_ENV === 'production') {
+      console.warn('⚠️  Server will continue without database connection. Please check MONGODB_URI.');
+    } else {
+      process.exit(1);
+    }
   }
 };
 
