@@ -23,7 +23,9 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "build:prod": "vite build --mode production"
+    "build:prod": "vite build --mode production",
+    "deploy": "npm run build && vercel --prod",
+    "deploy:preview": "npm run build && vercel"
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.1.13",
