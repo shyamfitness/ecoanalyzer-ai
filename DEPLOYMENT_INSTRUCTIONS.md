@@ -28,10 +28,10 @@
    ```
    NODE_ENV=production
    PORT=10000
-   MONGODB_URI=your_mongodb_atlas_connection_string
+   MONGODB_URI=<your-mongodb-atlas-connection-string>
    MONGODB_DB_NAME=ecoanalyzer
-   OPENAI_API_KEY=your_openai_api_key
-   JWT_SECRET=your_secure_random_string_here
+   OPENAI_API_KEY=<your-openai-api-key>
+   JWT_SECRET=<your-secure-random-string>
    FRONTEND_URL=https://your-frontend.vercel.app (update after frontend deploy)
    OPENAI_MODEL=gpt-4o-mini
    ```
@@ -157,7 +157,7 @@ After deployment, update these:
 - [ ] `MONGODB_URI=mongodb+srv://<username>:<password>@<cluster>.mongodb.net/ecoanalyzer`
 - [ ] `MONGODB_DB_NAME=ecoanalyzer`
 - [ ] `OPENAI_API_KEY=<your-openai-api-key>`
-- [ ] `JWT_SECRET=secure-random-string`
+- [ ] `JWT_SECRET=<secure-random-string>`
 - [ ] `FRONTEND_URL=https://your-frontend.vercel.app`
 - [ ] `OPENAI_MODEL=gpt-4o-mini`
 
