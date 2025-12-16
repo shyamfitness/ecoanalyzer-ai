@@ -52,7 +52,7 @@ export const scoringEngine = {
       label: 'Materials & Sourcing',
       score: materialsScore,
       weight: CATEGORY_WEIGHTS.materials,
-      notes: productSignals.materials?.notes || 'Material data synthesized by AI',
+      notes: productSignals.materials?.notes || 'Material impact assessment',
       highlights: productSignals.materials?.highlights || [],
       risks: productSignals.materials?.risks || [],
     };
@@ -131,7 +131,7 @@ export const scoringEngine = {
     const explainability = {
       summary:
         productSignals.summary ||
-        'AI-generated assessment combining materials, logistics, packaging, and end-of-life insights.',
+        'Assessment based on materials, logistics, packaging, and end-of-life factors.',
       positives: [
         ...(productSignals.highlights || []),
         ...(Object.values(breakdown)

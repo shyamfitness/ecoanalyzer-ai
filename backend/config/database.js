@@ -14,22 +14,22 @@ export const connectDatabase = async () => {
       autoIndex: process.env.NODE_ENV !== 'production',
     });
 
-    console.log(`✅ MongoDB connected (${mongoose.connection.host})`);
+    console.log(`MongoDB connected (${mongoose.connection.host})`);
 
     mongoose.connection.on('error', (err) => {
-      console.error('⚠️ MongoDB connection error:', err.message);
+      console.error('MongoDB connection error:', err.message);
     });
 
     mongoose.connection.on('disconnected', () => {
-      console.warn('⚠️ MongoDB disconnected');
+      console.warn('MongoDB disconnected');
     });
   } catch (error) {
-    console.error('❌ MongoDB connection failed');
+    console.error('MongoDB connection failed');
     console.error(error);
     // In production, don't exit immediately - allow server to start
     // The app can still serve requests, but database operations will fail
     if (process.env.NODE_ENV === 'production') {
-      console.warn('⚠️  Server will continue without database connection. Please check MONGODB_URI.');
+      console.warn('Server will continue without database connection. Please check MONGODB_URI.');
     } else {
       process.exit(1);
     }

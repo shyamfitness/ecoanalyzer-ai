@@ -14,10 +14,9 @@ import { notFoundHandler, errorHandler } from './middleware/errorHandler.js';
 dotenv.config();
 
 // Set default JWT_SECRET for development if not provided
-// NOTE: This is a development-only fallback. NEVER use in production!
 if (!process.env.JWT_SECRET && process.env.NODE_ENV !== 'production') {
   process.env.JWT_SECRET = 'dev-secret-change-in-production-' + Date.now();
-  console.warn('⚠️  WARNING: Using temporary JWT_SECRET for development. Set JWT_SECRET in .env for production!');
+  console.warn('WARNING: Using temporary JWT_SECRET for development. Set JWT_SECRET in .env for production.');
 }
 
 const __filename = fileURLToPath(import.meta.url);
@@ -91,5 +90,5 @@ app.use(notFoundHandler);
 app.use(errorHandler);
 
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
