@@ -1,9 +1,8 @@
 # 🌱 AI Environmental Impact Analyzer
 
-An **AI-powered full-stack tool** that analyzes product descriptions, images, or barcodes to **compute Environmental Impact Scores (EIS)**.  
-Built with **React.js, Node.js, Express, MongoDB, and OpenAI**, the platform provides **eco-friendly insights**, generates **visual reports**, and helps consumers make **sustainable purchasing decisions**.
+An **AI-powered full-stack web application** that analyzes product descriptions, images, or barcodes to compute **Environmental Impact Scores (EIS)**. Built with React.js, Node.js, Express, MongoDB, and OpenAI GPT-4, the platform provides eco-friendly insights, generates visual reports, and helps consumers make sustainable purchasing decisions.
 
-![EcoAnalyzer AI](https://img.shields.io/badge/React-19.1.1-blue?logo=react)
+![React](https://img.shields.io/badge/React-19.1.1-blue?logo=react)
 ![Node.js](https://img.shields.io/badge/Node.js-Latest-green?logo=node.js)
 ![MongoDB](https://img.shields.io/badge/MongoDB-Latest-green?logo=mongodb)
 ![OpenAI](https://img.shields.io/badge/OpenAI-GPT--4-orange?logo=openai)
@@ -12,29 +11,27 @@ Built with **React.js, Node.js, Express, MongoDB, and OpenAI**, the platform pro
 
 ## 🚀 Live Demo
 
-**[View Live Application](https://ecoanalyzer-ai.vercel.app/)** 
-
-
+**[View Live Application](https://ecoanalyzer-ai.vercel.app/)**
 
 ---
 
 ## 📌 Features
 
-✅ **AI-Powered Analysis** – Real OpenAI GPT-4 integration for sophisticated environmental impact analysis  
-✅ **Multiple Input Methods** –  
-   - 📝 **Text Input** – Enter product name and description  
-   - 📸 **Image Upload** – Drag & drop product images with OCR text extraction  
-   - 📦 **Barcode Scanner** – Manual barcode entry with product database lookup  
-✅ **Smart Categorization** – AI automatically categorizes products (Electronics, Clothing, Food, etc.)  
-✅ **Origin-Based Impact** – Calculates carbon footprint based on manufacturing country and shipping distance  
-✅ **Detailed Breakdown** – Shows impact across Manufacturing, Shipping, Packaging, and End-of-Life  
-✅ **Interactive Charts** – Beautiful Doughnut and Bar charts powered by Chart.js  
-✅ **Historical Tracking** – View and manage past analyses with search and filtering  
-✅ **User Authentication** – Secure user accounts with JWT authentication  
-✅ **Data Persistence** – MongoDB database for storing user data and analysis history  
-✅ **Smart Recommendations** – Personalized sustainability suggestions from AI  
-✅ **Export Reports** – Download analysis results as JSON  
-✅ **Responsive Design** – Optimized for desktop and mobile devices  
+- **AI-Powered Analysis** – Real OpenAI GPT-4 integration for sophisticated environmental impact analysis
+- **Multiple Input Methods**
+  - 📝 **Text Input** – Enter product name and description
+  - 📸 **Image Upload** – Drag & drop product images with OCR text extraction
+  - 📦 **Barcode Scanner** – Manual barcode entry with product database lookup
+- **Smart Categorization** – AI automatically categorizes products (Electronics, Clothing, Food, etc.)
+- **Origin-Based Impact** – Calculates carbon footprint based on manufacturing country and shipping distance
+- **Detailed Breakdown** – Shows impact across Manufacturing, Shipping, Packaging, and End-of-Life
+- **Interactive Charts** – Beautiful Doughnut and Bar charts powered by Chart.js
+- **Historical Tracking** – View and manage past analyses with search and filtering
+- **User Authentication** – Secure user accounts with JWT authentication
+- **Data Persistence** – MongoDB database for storing user data and analysis history
+- **Smart Recommendations** – Personalized sustainability suggestions from AI
+- **Export Reports** – Download analysis results as JSON
+- **Responsive Design** – Optimized for desktop and mobile devices
 
 ---
 
@@ -61,66 +58,78 @@ Built with **React.js, Node.js, Express, MongoDB, and OpenAI**, the platform pro
 ## 📦 Installation & Setup
 
 ### Prerequisites
+
 - Node.js (v18 or higher)
 - MongoDB (local or Atlas)
 - OpenAI API Key
 - npm or yarn
 
 ### 1. Clone the Repository
+
 ```bash
 git clone https://github.com/shyamfitness/ecoanalyzer-ai.git
 cd ecoanalyzer-ai
 ```
 
 ### 2. Backend Setup
+
 ```bash
 cd backend
 npm install
 ```
 
-Create a `.env` file in the backend directory:
+Create a `.env` file in the `backend` directory (you can copy from `backend/env.example`):
+
 ```env
 # Database
 MONGODB_URI=mongodb://localhost:27017/ecoanalyzer
 # or for MongoDB Atlas: mongodb+srv://<username>:<password>@<cluster>.mongodb.net/ecoanalyzer
 
-# OpenAI API
-OPENAI_API_KEY=your_openai_api_key_here
+MONGODB_DB_NAME=ecoanalyzer
 
-# JWT Secret
-JWT_SECRET=your_jwt_secret_here
+# OpenAI API (Required)
+OPENAI_API_KEY=your_openai_api_key_here
+OPENAI_MODEL=gpt-4o-mini
+
+# Authentication (Required)
+JWT_SECRET=your_secure_jwt_secret_here
 
 # Server Configuration
 PORT=5000
 NODE_ENV=development
 
 # CORS Configuration
-FRONTEND_URL=http://localhost:5173
+FRONTEND_URL=http://localhost:5173,http://localhost:4173
 ```
 
 Start the backend server:
+
 ```bash
 npm run dev
 ```
 
 ### 3. Frontend Setup
+
 ```bash
 cd .. # Back to root directory
 npm install
 ```
 
-Create a `.env` file in the root directory:
+Create a `.env` file in the root directory (you can copy from `env.example`):
+
 ```env
 VITE_API_URL=http://localhost:5000/api
 VITE_NODE_ENV=development
 ```
 
 Start the frontend development server:
+
 ```bash
 npm run dev
 ```
 
 ### 4. Build for Production
+
 ```bash
 # Build frontend
 npm run build
@@ -134,27 +143,31 @@ npm start
 
 ## 🎯 Usage
 
-### 1. **Sign Up / Sign In**
-   - Create an account or sign in to save your analysis history
-   - Your data is securely stored and synced across devices
+### 1. Sign Up / Sign In
 
-### 2. **Analyze a Product**
-   - Choose your input method (Text, Image, or Barcode)
-   - Enter product details or upload files
-   - Click "Analyze Environmental Impact"
-   - Wait for AI processing (2-5 seconds)
+- Create an account or sign in to save your analysis history
+- Your data is securely stored and synced across devices
 
-### 3. **View Results**
-   - See your Environmental Impact Score (0-10 scale)
-   - Explore detailed breakdown charts
-   - Read personalized AI recommendations
-   - Export or share your results
+### 2. Analyze a Product
 
-### 4. **Track History**
-   - Navigate to "History" tab
-   - Search and filter past analyses
-   - Compare different products
-   - Track your sustainability progress
+- Choose your input method (Text, Image, or Barcode)
+- Enter product details or upload files
+- Click "Analyze Environmental Impact"
+- Wait for AI processing (2-5 seconds)
+
+### 3. View Results
+
+- See your Environmental Impact Score (0-10 scale)
+- Explore detailed breakdown charts
+- Read personalized AI recommendations
+- Export or share your results
+
+### 4. Track History
+
+- Navigate to "History" tab
+- Search and filter past analyses
+- Compare different products
+- Track your sustainability progress
 
 ---
 
@@ -163,37 +176,74 @@ npm start
 ```
 ecoanalyzer-ai/
 ├── backend/                 # Node.js/Express backend
-│   ├── models/             # MongoDB models
-│   │   ├── User.js         # User schema
-│   │   └── Analysis.js     # Analysis schema
-│   ├── routes/             # API routes
-│   │   ├── auth.js         # Authentication routes
-│   │   ├── analysis.js     # Analysis routes
-│   │   └── users.js        # User management routes
-│   ├── services/           # Business logic
-│   │   └── openaiService.js # OpenAI integration
-│   ├── middleware/         # Express middleware
-│   │   └── auth.js         # JWT authentication
-│   └── server.js           # Main server file
-├── src/                    # React frontend
-│   ├── components/         # React components
-│   │   ├── Header.jsx      # Navigation header
-│   │   ├── ProductAnalyzer.jsx  # Main analysis interface
-│   │   ├── ImageUpload.jsx # Drag & drop image upload
-│   │   ├── BarcodeScanner.jsx   # Barcode input component
-│   │   ├── ResultDisplay.jsx    # Analysis results with charts
-│   │   ├── HistoryView.jsx # Historical analyses view
-│   │   └── LoginModal.jsx  # Authentication modal
-│   ├── contexts/           # React contexts
-│   │   └── AuthContext.jsx # Authentication context
-│   ├── services/           # API services
-│   │   └── api.js          # API client
-│   ├── utils/              # Utility functions
-│   │   └── environmentalCalculator.js  # Fallback calculations
-│   ├── App.jsx            # Main app component
-│   ├── main.jsx           # App entry point
-│   └── index.css          # Tailwind CSS imports
-└── package.json           # Frontend dependencies
+│   ├── config/              # Configuration files
+│   │   └── database.js      # MongoDB connection
+│   ├── controllers/         # Request handlers
+│   │   ├── analysisController.js
+│   │   ├── barcodeController.js
+│   │   └── historyController.js
+│   ├── middleware/          # Express middleware
+│   │   ├── auth.js          # JWT authentication
+│   │   └── errorHandler.js  # Error handling
+│   ├── models/              # MongoDB models
+│   │   ├── User.js
+│   │   ├── Analysis.js
+│   │   └── Product.js
+│   ├── routes/              # API routes
+│   │   ├── auth.js
+│   │   ├── users.js
+│   │   └── v1/              # API v1 routes
+│   │       ├── analyzeRoutes.js
+│   │       ├── barcodeRoutes.js
+│   │       ├── historyRoutes.js
+│   │       └── index.js
+│   ├── services/            # Business logic
+│   │   ├── openaiService.js
+│   │   ├── ocrService.js
+│   │   ├── barcodeService.js
+│   │   └── pdfService.js
+│   ├── utils/               # Utility functions
+│   │   ├── asyncHandler.js
+│   │   └── scoringEngine.js
+│   ├── server.js            # Main server file
+│   ├── package.json
+│   └── env.example         # Environment variables template
+├── src/                     # React frontend
+│   ├── components/          # React components
+│   │   ├── ui/              # UI components
+│   │   │   ├── Button.jsx
+│   │   │   ├── Card.jsx
+│   │   │   ├── Container.jsx
+│   │   │   ├── Input.jsx
+│   │   │   ├── Textarea.jsx
+│   │   │   ├── Skeleton.jsx
+│   │   │   └── EmptyState.jsx
+│   │   ├── BarcodeScanner.jsx
+│   │   ├── ImageUpload.jsx
+│   │   ├── LoginModal.jsx
+│   │   ├── Navbar.jsx
+│   │   └── Footer.jsx
+│   ├── contexts/            # React contexts
+│   │   └── AuthContext.jsx
+│   ├── pages/               # Page components
+│   │   ├── Home.jsx
+│   │   ├── Analyzer.jsx
+│   │   ├── Result.jsx
+│   │   ├── History.jsx
+│   │   ├── Dashboard.jsx
+│   │   ├── About.jsx
+│   │   └── Settings.jsx
+│   ├── services/            # API services
+│   │   └── api.js
+│   ├── App.jsx              # Main app component
+│   ├── main.jsx             # App entry point
+│   └── index.css            # Tailwind CSS imports
+├── public/                  # Static assets
+├── README.md                # This file
+├── package.json             # Frontend dependencies
+├── vite.config.js           # Vite configuration
+├── tailwind.config.js       # Tailwind CSS configuration
+└── env.example              # Frontend environment variables template
 ```
 
 ---
@@ -210,6 +260,7 @@ ecoanalyzer-ai/
 6. **Scoring Algorithm**: AI combines all factors into a 0-10 environmental impact score
 
 ### Scoring Scale
+
 - **0-3**: Excellent (🌟) - Low environmental impact
 - **3-5**: Good (✅) - Moderate impact, sustainable choice
 - **5-7**: Fair (⚠️) - Higher impact, consider alternatives
@@ -217,44 +268,24 @@ ecoanalyzer-ai/
 
 ---
 
-## 🎨 Key Components
-
-### Backend Architecture
-- **Express.js Server**: RESTful API with middleware for security and rate limiting
-- **MongoDB Database**: Document-based storage for users and analyses
-- **JWT Authentication**: Secure user sessions with token-based auth
-- **OpenAI Integration**: Real AI analysis using GPT-4 API
-- **File Upload**: Multer middleware for image processing
-- **OCR Processing**: Tesseract.js for text extraction from images
-
-### Frontend Architecture
-- **React Context**: Global state management for authentication
-- **Component-Based**: Modular, reusable React components
-- **API Integration**: Axios client with interceptors for auth
-- **Real-time Updates**: Dynamic UI updates based on API responses
-- **Error Handling**: Comprehensive error states and user feedback
-
----
-
 ## 🚀 Deployment
 
-For detailed deployment instructions, see **[DEPLOYMENT.md](./DEPLOYMENT.md)**
+### Frontend (Vercel)
 
-### Quick Deploy
-
-**Frontend (Vercel):**
 1. Connect GitHub repository to Vercel
-2. Set `VITE_API_URL` environment variable
+2. Set `VITE_API_URL` environment variable to your backend URL
 3. Deploy automatically on push
 
-**Backend (Render):**
+### Backend (Render)
+
 1. Create new Web Service on Render
 2. Connect GitHub repository
 3. Set root directory to `backend/`
-4. Configure environment variables
+4. Configure environment variables (see `backend/env.example`)
 5. Deploy
 
-**Database (MongoDB Atlas):**
+### Database (MongoDB Atlas)
+
 1. Create MongoDB Atlas account
 2. Create a new cluster (Free tier available)
 3. Get your connection string
@@ -265,20 +296,20 @@ For detailed deployment instructions, see **[DEPLOYMENT.md](./DEPLOYMENT.md)**
 ## 🔧 Environment Variables
 
 ### Backend (.env)
-```env
-MONGODB_URI=mongodb://localhost:27017/ecoanalyzer
-OPENAI_API_KEY=your_openai_api_key_here
-JWT_SECRET=your_jwt_secret_here
-PORT=5000
-NODE_ENV=development
-FRONTEND_URL=http://localhost:5173
-```
+
+See `backend/env.example` for a complete template. Required variables:
+
+- `MONGODB_URI` - MongoDB connection string
+- `OPENAI_API_KEY` - Your OpenAI API key
+- `JWT_SECRET` - Secure random string for JWT tokens
+- `PORT` - Server port (default: 5000)
+- `FRONTEND_URL` - Frontend URL(s) for CORS
 
 ### Frontend (.env)
-```env
-VITE_API_URL=http://localhost:5000/api
-VITE_NODE_ENV=development
-```
+
+See `env.example` for a complete template. Required variables:
+
+- `VITE_API_URL` - Backend API URL
 
 ---
 
@@ -294,7 +325,7 @@ VITE_NODE_ENV=development
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the LICENSE file for details.
 
 ---
 
@@ -313,7 +344,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Contact
 
-**email** - shyamjeesrivastav035@gmail.com
+**Email** - shyamjeesrivastav035@gmail.com
 
 **Project Link**: [https://github.com/shyamfitness/ecoanalyzer-ai](https://github.com/shyamfitness/ecoanalyzer-ai)
 
